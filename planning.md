@@ -59,24 +59,70 @@ This diversity makes Genshin Impact a strong candidate for a text classification
 
 ### Hard Edge Cases
 
-The most difficult cases are posts that combine multiple discourse styles. 
+The most difficult cases are posts that combine multiple discourse styles (blending gameplay discussion, subjective opinions, and emotional reactions). To ensure consistency, I labeled each post according to its **primary communicative intent** rather than the presence of any single feature.  
 
-For example:
+#### **Edge Case 1: Analysis vs. Hot Take**
 
 > "Is Hu Tao really worth using without Staff of Homa? Everyone says she's amazing, but mine feels weak."
 
-The post could reasonably be interpreted as: 
+This could reasonably be interpreted as either:
 
-- **Analysis,** because it asks about gameplay performance and optimization. 
-- **Hot Take,** because it implicitly questions the character's strength and community perception.
+- **Analysis,** because it asks for gameplay advice and evaluation of a character's performance. 
+- **Hot Take,** because it questions Hu Tao's strength and community opinion.
 
-**Final Decision:** I would label this example as **Analysis** because the primary purpose is to seek gameplay guidance about Hu Tao's performance and equipment rather than to persuade readers that she is good or bad. Although it contains a personal opinion, the central intent is obtaining information and advice. 
+**Final Decision:** **Analysis** 
+
+- The primary purpose is to seek information and guidance rather than persuade others that Hu Tao is overrated or weak. 
+
+#### **Edge Case 2: Advice Containing Personal Opinions**
+
+> "The only must have weapons are all favonius line, mostly spears and swords. Catalysts are less important because TTDS and Widsith exist. Bows and claymores are in a sad state. If you buying BP then some 5 stars have even less value unless you obsessed with min-maxing or posting damage screenshot, instead of clearing content. BP is only way to get descent crit value weapons, except for Widsith. 5-star are good for bigger stats they give. And generaly you want sig or best stat stick for specific character you want to improve. Many older characters have worthless constellations, so 5-star weapons are much better on them vs C1-C3 "investment"."
+
+The author makes several subjct claims ("must have", "worthless constellations"), but the overall post functions as gameplay guidance about weapon investment. 
+
+**Final Decision:** **Analysis** 
+
+- Despite opinionated wording, the central purpose is to provide strategic recommendations. 
+
+#### **Edge Case 3: Personal Story With a Request for Help**
+
+> "I've posted about this before. For the full context. I've been playing Genshin since 2021 on an iPad. That iPad is gone. I had the email linked to my Genshin account on there so I didn't think to save it on my phone once I started mainly playing on it. I have an iPhone XS max that will soon no longer be supported by Apple. I've submitted countless account forms to Hoyo support. Every single one has been declined even though the information is correct. I am now no longer allowed to submit any more forms due to how many I was doing. I've stopped playing on the account recently because it dawned on me that one day, it will be the last day I log in to the account. I’ve mainly been on my alt that I started in 2023 and have not logged in until recently. I no longer have the energy to get that account up to what my main is(AR 58). My alt is at AR 28. I don't know what to do anymore. Thanks for reading this. Any advice would be deeply appreciated."
+
+Most of the post recounts a frustrating personal experience recovering an account, which could suggest **Reaction.**
+
+**Final Decision:** **Analysis** 
+
+- Because the post ultimately seeks advice and assistance, I treated its primary intent as information-seeking rather than emotional venting. 
+
+#### **Edge Case 4: Reaction vs. Hot Take**
+
+> "Since joining the game six months ago, I have wished for 10 characters. And behold, I have lost 50/50 on 9 OF THEM. I have triggered capturing radiance twice (on Mavuika C1 and Flins C2, and I'm counting them as a lose too since you have to lose the 50/50 to trigger it). My only win was on Ineffa's first banner. Same with the weapon banner, lost every 50/50. So I'm either very, very unlucky or the gacha in this game is undeniably predatory. If there is a 50% chance to lose, where is the other 50 ???"
+
+The final sentence expresses a strong opinion about the game's gacha system, but the majority of the post focuses on the author's own unlucky experiences and frustration.
+
+**Final Decision:** **Reaction** 
+
+- I prioritized the post's emotional and experiential focus over its brief evaluative conclusion.  
+
+#### **Edge Case 5: Questions That Express Opinions**
+
+> "Does anybody else realize how pointless chasing the meta is?"
+
+Although phrased as a question, it is effectively asserting that chasing the meta is pointless rather than genuinely requesting information.
+
+**Final Decision:** **Hot Take** 
+
+- I classified rhetorical questions according to the opinion they express rather than their grammatical form. 
+
+#### **General Decision Rule**
 
 To ensure consistency during annotation, I will classify posts according to their **primary communicative intent:**
 
-- If the author is mainly requesting or providing gameplay reasoning, I will label the post **Analysis.**
-- If the author is mainly evaluating or judging whether something is good, bad, overrated, or worth using, I will label it **Hot Take.**
-- If the author is primarily expressing emotion or describing a personal experience, I will label it **Reaction.**
+- If the author is mainly requesting or providing gameplay reasoning, I will label the post **Analysis** (the main goal is to explain, reason about, or seek gameplay information, optimization, or strategy).
+- If the author is mainly evaluating or judging whether something is good, bad, overrated, or worth using, I will label it **Hot Take** (the main goal is to express an evaluative judgment or opinion about the game, characters, mechanics, or community).
+- If the author is primarily expressing emotion or describing a personal experience, I will label it **Reaction** (the main goal is to express an emotional response, personal experience, celebration, disappointment, or frustration).
+
+When multiple discourse styles appeared in the same post, I assigned the label corresponding to the dominant purpose rather than secondary elements.
 
 Questions will **not** receive their own label. Instead, they too will be assigned based on intent using the above rules. 
 
