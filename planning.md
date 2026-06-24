@@ -31,7 +31,7 @@ This diversity makes Genshin Impact a strong candidate for a text classification
 
 ***Example Posts:***
 
-1. > Kazuha Kazuha is pretty overrated. idk what it is about him, but everybody praises him and wants him so badly. They completely ignore other good anemo characters like venti, sucrose & basically all other anemo characters.
+1. > Kazuha is pretty overrated. idk what it is about him, but everybody praises him and wants him so badly. They completely ignore other good anemo characters like venti, sucrose & basically all other anemo characters.
 
    **Why?** This is fundamentally an opinion evaluating a character and community perception rather than presenting analysis. 
 2. > Genshin has not been as fun as of late the quests are just walk here dialogue with choices that mean nothing walk here do the same thing random small fight walk here done and then when you do get a big fight it with acts like you were struggling or you have to wait for the dialogue to end to actually continue fighting then there's the quests that force you to use other characters that suck at that specific boss not to mention the amount of mini games in levels that only show up once and never again 90%bof their new five stars are female and you rarely get male characters even as four stars and not to mention the custom character situation where you have to pay for good things with real money with no way of getting them any other way anyway...
