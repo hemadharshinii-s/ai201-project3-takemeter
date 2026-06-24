@@ -8,7 +8,7 @@ TakeMeter is a text classification system that identifies the primary discourse 
 - Hot Take
 - Reaction
 
-The goal is not to determine what a post is about, but rather how the author is communicating. Many Genshin Impact discussions blend gameplay advice, opinions, and emotional experiences, making discourse-style classification a challenging natural langauge process task. 
+The goal is not to determine what a post is about, but rather how the author is communicating. Many Genshin Impact discussions blend gameplay advice, opinions, and emotional experiences, making discourse-style classification a challenging natural language process task. 
 
 This project compares a fine-tuned DistilBERT classifier against a zero-shot large language model baseline to evaluate how well supervised fine-tuning performs on a relatively small community-specific dataset. 
 
@@ -179,7 +179,7 @@ This preserved approximately equal label distributions across all splits.
 | Parameter | Value | 
 | --- | ---: |
 | Epochs | 5 | 
-| Learning Rate | 2e - 5 | 
+| Learning Rate | 2e-5 | 
 | Batch Size | 16 | 
 | Weight Decay | 0.01 | 
 | Warmup Steps | 50 | 
@@ -309,7 +309,7 @@ After manually reviewing the examples, I agreed with these patterns.
 - Predicted Label: **Hot Take**
 - Confidence: **0.36**
 
-**Why It Failed?** The phrase "the power creep feels kinda crazy" looks like an evaluate judgment. However, the actual purpose of the post is requesting gameplay help. The model appears to overweight opinionated language and underweight the advice-seeking structure of the post.
+**Why It Failed?** The phrase "the power creep feels kinda crazy" looks like an evaluative judgment. However, the actual purpose of the post is requesting gameplay help. The model appears to overweight opinionated language and underweight the advice-seeking structure of the post.
 
 **How To Improve?** Add more training examples where questions contain evaluative wording but are ultimately seeking gameplay guidance.
 
@@ -333,7 +333,7 @@ After manually reviewing the examples, I agreed with these patterns.
 - Predicted Label: **Hot Take**
 - Confidence: **0.41**
 
-**Why It Failed?** The author is expressing frustration about a personal experience However, the statement also resembles criticism of the game's progression systems. The model appears to associate negative sentiment with Hot Take, even when the post is primarily emotional rather than evaluative.
+**Why It Failed?** The author is expressing frustration about a personal experience. However, the statement also resembles criticism of the game's progression systems. The model appears to associate negative sentiment with Hot Take, even when the post is primarily emotional rather than evaluative.
 
 **How To Improve?** Include additional reaction examples involving frustration, disappointment, and emotional venting without explicit evaluation.
 
@@ -417,6 +417,48 @@ After obtaining evaluation results, I provided misclassified examples to ChatGPT
 
 I manually reviewed the examples and verified these patterns before incorporating them into the evaluation report.
 
-#### **AI Use #3: Preliminary Annnotation Assistance**
+#### **AI Use #3: Preliminary Annotation Assistance**
 
 During dataset creation, I also experimented with using ChatGPT to propose preliminary labels for some Genshin Impact posts before manual annotation. My prompts asked the model to classify posts according to my three-label taxonomy (Analysis, Hot Take, and Reaction) using the definitions I had established in `planning.md`. I did **not** accept these labels automatically. Instead, I manually reviewed every suggested label and compared it against my own decision rules. When the AI's suggestion conflicted with my interpretation—particularly for mixed cases involving emotional questions seeking gameplay advice or opinionated strategic recommendations—I overrode the proposed label to maintain consistency with my taxonomy. Using AI in this way accelerated the annotation process but did not replace human judgment. The final dataset consists only of labels that I personally reviewed and approved, and any AI-generated suggestions were treated as drafts rather than ground truth.
+
+--- 
+
+### Stretch Features
+
+#### **Confidence Calibration**
+
+The fine-tuned DistilBERT model outputs a confidence score for each prediction based on the softmax probability assigned to the predicted class. I examined these confidence values alongside the prediction outcomes to determine whether higher confidence generally corresponded to higher accuracy.
+
+In this project, the model tended to make predictions with **moderate rather than extremely high confidence.** Correctly classified examples in my sample had confidence scores such as:
+
+| Example (Summarized)                                       | Predicted Label | Confidence |
+| --------------------------------------------- | --------------- | ---------: |
+| Gameplay advice about building reaction teams | Analysis        |       0.66 |
+| Resource management and team-building advice  | Analysis        |       0.59 |
+| Opinion about Inazuma puzzles                 | Hot Take        |       0.44 |
+| Complaint about Sheer Cold exploration        | Hot Take        |       0.48 |
+| Personal story about losing a 50/50           | Reaction        |       0.42 |
+
+However, several incorrect predictions also received similar confidence scores:
+
+| Example (Summarized)                                           | Predicted Label | Actual Label |Confidence |
+| ------------------------------------------------- | --------------- | --------------- | ---------: |
+| Frustrations with banner wishes  | Analysis            |  Hot Take        | 0.49 |
+| Wish RNG question      | Hot Take            |  Analysis        | 0.47 |
+| Emotional frustration       | Hot Take            |  Reaction        | 0.41
+
+Overall, these results suggest that the **model's confidence was only moderately calibrated.** Predictions with confidence in the 0.40–0.60 range could be either correct or incorrect, indicating that the confidence score alone should not be interpreted as a reliable estimate of certainty. Instead, it appears that the model often recognized multiple plausible interpretations for borderline posts and assigned only moderate probability to its chosen label.
+
+#### **Error Pattern Analysis**
+
+Reviewing the confusion matrix and individual misclassifications revealed a **systematic error pattern rather than random mistakes.**
+
+The most common confusion was between **Analysis** and **Hot Take.** Three Analysis posts were incorrectly predicted as Hot Take, while two Hot Take posts were predicted as Analysis. In addition, three Reaction posts were also misclassified as Hot Take. Notably, the model **never directly confused Analysis with Reaction,** suggesting that Hot Take functioned as an intermediate category for ambiguous examples.
+
+A recurring pattern was that posts containing **negative or emotionally charged language** were often classified as Hot Take even when their primary communicative intent was different. For example:
+
+- Advice-seeking questions that began with criticism (e.g., discussing power creep before asking for team-building help) were often interpreted as opinions rather than requests for guidance.
+- Frustrated personal experiences about unlucky pulls or wasted resources were sometimes interpreted as evaluations of the game's design instead of emotional reactions.
+- Very short factual questions, such as asking whether the wish RNG is truly random, provided little contextual evidence and were occasionally classified as Hot Take despite being information-seeking.
+
+These findings suggest that the model learned to associate **surface-level cues such as criticism, negativity, and strong wording** with the Hot Take label instead of consistently identifying the author's underlying communicative intent. Improving performance would likely require adding more training examples that explicitly separate **advice-seeking from opinion-sharing and emotional venting from evaluative judgment,** especially for borderline cases that combine multiple discourse styles.
