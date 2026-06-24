@@ -192,3 +192,12 @@ After evaluating the trained model, I plan to use an AI assistant to review misc
 ### Expected Challenges
 
 The biggest challenge will likely be distinguishing between posts that contain both gameplay reasoning and strong opinions. Many Genshin discussions blend factual analysis with subjective evaluation, making the boundary between **Analysis** and **Hot Take** intentionally difficult. Establishing and consistently applying the decision rules above should reduce annotation inconsistency and produce a clearer training signal for the model. 
+
+---
+
+### Stretch Features
+
+The stretch features I pursued and added into my README.md are:
+
+- **Confidence Calibration:** Calibration analysis—do higher confidence predictions correspond to higher accuracy?
+- **Error Pattern Analysis:** Identify a systematic pattern across errors—a generalizable observation about a post type or label pair the model consistently struggles with, with supporting evidence from the error set.
